@@ -1,0 +1,174 @@
+# Commands Cheat Sheet 
+
+## Heroku
+
+#### Check the latest commit in server
+
+```shell
+git fetch heroku-remote 
+git log heroku-remote/master
+```
+
+#### Check last deploys
+
+```shell
+heroku releases --app my-app-name
+```
+
+#### Deploy master
+
+```shell
+git push heroku-remote master && heroku run rake db:migrate -a my-app-name && heroku restart -a my-app-name
+```
+
+#### Deploying a special branch:
+
+```shell
+git push heroku-remote my_branch:master && heroku run rake db:migrate -a my-app-name && heroku restart -a my-app-name
+```
+
+#### Execute SQL Query
+
+```shell
+heroku pg:psql -a my-app-name --command="select ...;"
+```
+
+#### View ENV VARs / Config
+
+```shell
+heroku config --app my-app-name
+```
+
+#### Set ENV VAR
+
+```shell
+heroku config:set MY_ENV_VAR=new_value --app my-app-name 
+```
+
+
+#### View Heroku LOG (5000 lines)
+
+```shell
+heroku logs -n5000 --app my-app-name
+```
+
+## GIT
+
+#### Update from remote without merge commit
+
+```shell
+git pull origin my_branch --rebase
+```
+
+After fixing conflicts (if exists)
+
+```shell
+git add relative/path/to/merged_file
+git rebase --continue
+```
+
+#### Stash and continue
+
+```shell
+git stash
+git stash list
+git stash pop
+```
+
+#### Undo last `git stash pop`
+
+```shell
+git reset --hard HEAD
+```
+
+
+#### Reset a branch with remote content
+
+```shell
+git fetch origin
+git reset --hard origin/master
+```
+
+#### Add missing file to last commit
+
+```shell
+git add file-that-i-forgot.txt
+git commit --amend --no-edit
+```
+
+
+#### Undo last commit
+
+https://stackoverflow.com/questions/927358/how-to-undo-the-last-commits-in-git
+
+```shell
+git reset HEAD~                                                                         
+git add ...                                           
+git commit -c ORIG_HEAD                                   
+```
+
+#### Show commit changes
+
+```shell
+git diff 94ec609f1^ 94ec609f1 --name-only
+```
+
+#### One-line log (pretty)
+
+See [Pretty git log in one line](https://ma.ttias.be/pretty-git-log-in-one-line/)
+
+```shell
+git log --pretty=format:"%C(yellow)%h %C(cyan)%ad %C(magenta)(%ae)%C(auto): %s" --date=iso8601 -n10 origin/master 
+```
+
+Or 
+
+```shell
+# Set config
+git config --global alias.logline 'log --pretty=format:"%C(yellow)%h %C(cyan)%ad %C(blue)<%ae>%C(auto): %s" --date=iso8601 -n10'
+# Use it
+git logline origin/master 
+```
+
+## AWS Cli
+
+#### Download all content form a folder 
+
+```shell
+aws s3 sync s3://my-app-name/path/to/files . --dryrun --profile my-app-name
+```
+
+See [Configuration and Credential Files](http://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html#cli-config-files) to set `my-app-name` profile.
+
+
+## Ultrahook
+
+```shell
+ultrahook stripe localhost:3000
+```
+
+## Rails 
+
+### Run background jobs
+
+```shell
+RAILS_ENV=development script/delayed_job start
+RAILS_ENV=development script/delayed_job stop
+```
+
+## SQL
+
+#### Query with jsonb example
+
+```sql
+SELECT
+  payload#>>'{data,object,customer}' as customer_id,
+  payload#>>'{data,object,id}' as subscription_id
+
+FROM stripe_webhooks
+WHERE
+  created_at BETWEEN '2017-08-07 00:00:00' AND '2017-08-08 00:00:00' AND
+  payload#>>'{type}' = 'customer.subscription.updated' AND
+  (payload#>>'{data,object,plan,id}')::text <> (payload#>>'{data,previous_attributes,plan,id}')::text;
+ ```
+ 

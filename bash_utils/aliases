@@ -1,0 +1,18 @@
+#!/bin/bash
+# This file contains useful command aliases
+# Include the file in the `.bash_profile` file using:
+#
+#  if [ -f /path/to/bash_utils/aliases ]; then
+#    . /path/to/bash_utils/aliases
+#  fi
+
+# General shell aliases
+alias ll='ls -lah'
+
+# Rails dev aliases
+alias be='bundle exec'
+alias mall='bundle exec rake db:migrate db:test:prepare factory_bot:lint'
+alias t='bundle exec rspec'
+alias rc='bundle exec ./bin/rails console'
+alias srv='bundle exec ./bin/rails server'
+alias hrc='heroku run rails console' # Add --app [app_name]

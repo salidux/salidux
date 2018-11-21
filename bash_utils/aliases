@@ -13,6 +13,7 @@ alias ll='ls -lah'
 alias be='bundle exec'
 alias mall='bundle exec rake db:migrate db:test:prepare factory_bot:lint'
 alias t='bundle exec rspec'
+alias tf='bundle exec rspec --only-failures'
 alias rc='bundle exec ./bin/rails console'
 alias srv='bundle exec ./bin/rails server'
 alias hrc='heroku run rails console' # Add --app [app_name]

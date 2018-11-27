@@ -8,6 +8,7 @@
 
 # General shell aliases
 alias ll='ls -lah'
+alias vat='vimcat'
 
 # Rails dev aliases
 alias be='bundle exec'

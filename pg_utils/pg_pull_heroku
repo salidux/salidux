@@ -1,0 +1,14 @@
+#!/bin/bash
+# $1 = Heroku App name (ex: my_app)
+# $2 = Database name (ex: my_app_development)
+
+set -x
+
+# Ensure the database doesn't exist
+dropdb --if-exists --echo --host=localhost $2
+
+# Try to read from the first follower, if not, the main DB
+follower_db=`heroku pg:info --app $1 | grep "Followers:" | awk '{print $2}' | awk -F ',' '{print $1}'`
+heroku pg:pull ${follower_db:-DATABASE_URL} $2 --app $1
+
+echo "Finished!"

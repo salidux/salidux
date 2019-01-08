@@ -18,3 +18,4 @@ alias tf='bundle exec rspec --only-failures'
 alias rc='bundle exec ./bin/rails console'
 alias srv='bundle exec ./bin/rails server'
 alias hrc='heroku run rails console' # Add --app [app_name]
+alias hrun='heroku run' # Add --app [app_name]

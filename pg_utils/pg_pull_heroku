@@ -2,6 +2,11 @@
 # $1 = Heroku App name (ex: my_app)
 # $2 = Database name (ex: my_app_development)
 
+if [ $# -eq 0 ]; then
+  echo "Usage: pg_pull_heroku app_name local_db_name" 
+  exit 1
+fi
+
 set -x
 
 # Ensure the database doesn't exist

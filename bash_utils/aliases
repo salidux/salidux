@@ -19,3 +19,14 @@ alias rc='bundle exec ./bin/rails console'
 alias srv='bundle exec ./bin/rails server'
 alias hrc='heroku run rails console' # Add --app [app_name]
 alias hrun='heroku run' # Add --app [app_name]
+
+# Git aliases
+alias cb='git checkout'
+alias mkb='git checkout -b'
+alias rmb='git branch -d'
+alias rmbf='git branch -D'
+
+__git_complete cb _git_checkout
+__git_complete mkb _git_checkout
+__git_complete rmb _git_branch
+__git_complete rmbf _git_branch

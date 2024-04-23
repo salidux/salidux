@@ -12,6 +12,7 @@ alias vat='vimcat'
 
 # Rails dev aliases
 alias be='bundle exec'
+alias besu="NOCOV=1 SKIP_WEBPACK_COMPILE=true bundle exec rspec `git status -s | cut -c4- | grep 'spec/'`"
 alias mall='bundle exec rake db:migrate db:test:prepare factory_bot:lint'
 alias t='bundle exec rspec'
 alias tf='bundle exec rspec --only-failures'

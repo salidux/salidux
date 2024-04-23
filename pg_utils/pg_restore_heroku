@@ -26,7 +26,7 @@ psql --host=localhost --dbname=postgres --command="DROP DATABASE IF EXISTS $2"
 psql --host=localhost --dbname=postgres --command="CREATE DATABASE $2"
 
 # Restore dump
-pg_restore --clean --no-acl --no-owner --host=localhost --dbname=$2 $DUMP_FNAME > pg_restore.log
+pg_restore --clean --no-acl --no-owner --jobs=4 --host=localhost --dbname=$2 $DUMP_FNAME > pg_restore.log
 
 
 set +x

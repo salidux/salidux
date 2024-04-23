@@ -1,3 +1,7 @@
 #!/bin/bash
 set -x
-pg_ctl -D /Users/diego/Development/pg/data -l /Users/diego/Development/pg/data/logfile stop
+
+# The data folder should have been initialized with: `initdb -D /usr/local/pgsql/data` 
+data_folder=${PG_DATA_PATH:-/Users/diego/Development/pg/data/}
+log_file=${PG_LOG_FILE:-/Users/diego/Development/pg/data/logfile}
+pg_ctl -D $data_folder -l $log_file stop
